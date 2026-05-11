@@ -16,11 +16,11 @@ import { AuthService } from '../../services/auth.service';
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-              <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+              <rect x="3" y="3" width="18" height="18" rx="4" />
+              <path d="M8 8h8M8 12h8M8 16h8" />
             </svg>
           </div>
-          <span class="text-white font-bold text-xl tracking-tight">StockFlow</span>
+          <span class="text-white font-bold text-xl tracking-tight">Inventrack</span>
         </div>
 
         <div>
@@ -36,11 +36,11 @@ import { AuthService } from '../../services/auth.service';
             Start managing smarter,<br/>not harder.
           </h2>
           <p class="text-emerald-200 text-sm leading-relaxed">
-            Join StockFlow and take control of your inventory with real-time tracking and insights.
+            Join Inventrack and take control of your inventory with real-time tracking and insights.
           </p>
         </div>
 
-        <p class="text-emerald-300 text-xs">&copy; 2026 StockFlow. All rights reserved.</p>
+        <p class="text-emerald-300 text-xs">&copy; 2026 Inventrack. All rights reserved.</p>
       </div>
 
       <!-- Right Panel -->
@@ -50,11 +50,12 @@ import { AuthService } from '../../services/auth.service';
           <div class="mb-8">
             <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center mb-6 lg:hidden">
               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                <rect x="4" y="4" width="16" height="16" rx="4" />
+                <path d="M8 8h8M8 12h8M8 16h8" />
               </svg>
             </div>
             <h1 class="text-2xl font-bold text-slate-900 mb-1">Create an account</h1>
-            <p class="text-slate-500 text-sm">Get started with StockFlow today</p>
+            <p class="text-slate-500 text-sm">Get started with Inventrack today</p>
           </div>
 
           <!-- Error Alert -->

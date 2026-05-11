@@ -31,12 +31,12 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
           <div class="p-8 sm:p-12">
 
             <!-- Error Alert -->
-            <div *ngIf="error" class="mb-8 rounded-[28px] border border-red-200 bg-red-50 px-6 py-4 text-red-700 flex items-center gap-3 animate-fade-in">
+            <!-- <div *ngIf="error" class="mb-8 rounded-[28px] border border-red-200 bg-red-50 px-6 py-4 text-red-700 flex items-center gap-3 animate-fade-in">
               <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               <p class="text-sm font-medium">{{ error }}</p>
-            </div>
+            </div> -->
 
-            <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-7">
+            <form [formGroup]="form" (ngSubmit)="submit()">
 
               <!-- Name + Category Row -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -61,8 +61,10 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
               <!-- Description -->
               <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Description</label>
-                <textarea formControlName="description" placeholder="Product description..."
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300 resize-vertical min-h-[120px]"></textarea>
+                <input type="text" formControlName="description" placeholder="Product description..."
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
+              </div>
+
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">
@@ -78,24 +80,18 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                   </label>
                   <input type="number" formControlName="quantity" placeholder="0" min="0"
                     class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
+                </div>
+              </div>
+
+              <!-- Product Image -->
+              <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Product Image</label>
                 <div class="relative border-2 border-dashed border-slate-200 rounded-[28px] p-8 text-center transition-all duration-300 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 group">
-                  <input type="file" (change)="onFile(\$event)" accept="image/jpeg,image/png,image/gif,image/webp"
+                  <input type="file" (change)="onFile($event)" accept="image/jpeg,image/png,image/gif,image/webp"
                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-[28px]" />
-                  <div *ngIf="!previewUrl" class="py-4">
-                    <div class="flex justify-center mb-3">
-                      <div class="p-3 bg-emerald-100 rounded-2xl group-hover:bg-emerald-200 transition-colors">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-                        </svg>
-                      </div>
-                    </div>
+                  <div class="py-4">
                     <p class="text-sm font-semibold text-slate-900 mb-1">Click to upload image</p>
                     <p class="text-xs text-slate-500">JPG, PNG, GIF, WEBP • Max 5MB</p>
-                  </div>
-                  <div *ngIf="previewUrl" class="py-4">
-                    <img [src]="previewUrl" class="max-h-[160px] mx-auto rounded-xl object-cover shadow-md mb-3" />
-                    <p class="text-xs font-semibold text-emerald-600">Click to change image</p>
                   </div>
                 </div>
               </div>

@@ -22,12 +22,12 @@ import { AuthService } from '../../services/auth.service';
               <div class="flex items-center gap-3 mb-10">
                 <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 shadow-lg shadow-slate-950/10 backdrop-blur-sm border border-white/20">
                   <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                    <rect x="4" y="4" width="16" height="16" rx="4" />
+                    <path d="M8 8h8M8 12h8M8 16h8" />
                   </svg>
                 </div>
                 <div>
-                  <p class="text-xs uppercase tracking-[0.35em] text-slate-300">StockFlow</p>
+                  <p class="text-xs uppercase tracking-[0.35em] text-slate-300">Inventrack</p>
                   <h1 class="text-3xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">Inventory made easy</h1>
                 </div>
               </div>

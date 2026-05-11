@@ -17,11 +17,11 @@ import { Router } from '@angular/router';
           <a routerLink="/dashboard" class="flex items-center gap-2.5 no-underline">
             <div class="w-8 h-8 bg-emerald-700 rounded-lg flex items-center justify-center shadow-md shadow-emerald-100/50">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                <rect x="4" y="4" width="16" height="16" rx="4" />
+                <path d="M8 8h8M8 12h8M8 16h8" />
               </svg>
             </div>
-            <span class="text-slate-900 font-bold text-lg tracking-tight">StockFlow</span>
+            <span class="text-slate-900 font-bold text-lg tracking-tight">Inventrack</span>
           </a>
 
           <!-- Nav Links -->
