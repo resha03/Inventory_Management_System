@@ -1,137 +1,48 @@
-# Inventory-System
+*Inventory Management System*
 
-A full-stack inventory management system built with Angular frontend and Node.js backend, featuring user authentication, product management, and real-time inventory tracking.
+A web-based Inventory Management System developed by Reysha03.
 
-## 🚀 Live Links
+ **Programming Tools & Technologies**
+- **Frontend:** React.js + Vite
+- **Backend:** Node.js + Express
+- **Database:** Firebase Firestore
+- **Authentication:** Firebase Auth
+- **Hosting:** Vercel (Frontend) + Render (Backend)
 
-- **Frontend**: [https://inventory-system-mu-khaki.vercel.app]
-- **Backend API**: [https://inventory-system-1-mopu.onrender.com/api]
+-User Roles
 
-## 🛠 Tech Stack
+Admin
+- Can add, update, and delete products/items
+- Can manage stock levels and inventory
+- Can view all transactions and reports
+- Can manage registered users
+- Can change own password
+- Default username: **ADMIN** | Default password: **ADMIN**
 
-### Frontend
-- **Angular 21** - Modern web framework
-- **Tailwind CSS** - Utility-first CSS framework
-- **TypeScript** - Type-safe JavaScript
+Staff / User
+- Can sign up and set their own username and password
+- Can view current inventory and stock levels
+- Can process stock in and stock out transactions
+- Can view transaction history
 
-### Backend
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web application framework
-- **TypeScript** - Type-safe JavaScript
+Features
+- Real-time inventory tracking
+- Low stock notifications
+- Transaction history and logs
+- User authentication and role management
+- Dashboard with inventory overview
 
-### Database
-- **Firebase Firestore** - NoSQL cloud database
-
-## 📋 Setup Instructions
-
-### Prerequisites
-- Node.js (v18 or higher)
+Requirements
+- Node.js v18+
+- Firebase account
 - npm or yarn
 
-### Frontend Setup
-```bash
-cd client
-npm install
-npm start
-```
+Setup
+1. Clone the repository
+2. Run `npm install` inside the `client` folder
+3. Add your `.env` file with Firebase config
+4. Run `npm run dev` to start locally
 
-### Backend Setup
-```bash
-cd server
-npm install
-npm run dev
-```
-
-
-## 📡 API Overview
-
-### Authentication Endpoints
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-
-### Product Endpoints
-- `GET /api/products` - Get all products (with pagination, search, category filter)
-- `GET /api/products/:id` - Get single product
-- `POST /api/products` - Create new product
-- `PUT /api/products/:id` - Update product
-- `DELETE /api/products/:id` - Delete product
-- `GET /api/products/categories` - Get all categories
-
-### Health Check
-- `GET /api/health` - API health status
-
-## ✨ Features Implemented
-
-- **User Authentication**
-  - User registration with email/password
-  - Secure login with JWT tokens
-  - Role-based access (admin/user)
-
-- **Dashboard**
-  - Overview of total products
-  - Low stock alerts
-  - Recent products display
-  - Category statistics
-
-- **Product Management**
-  - Add new products with image upload
-  - Edit existing products
-  - Delete products
-  - View product details
-  - Search and filter by category
-  - Pagination for large product lists
-
-- **Image Upload**
-  - Firebase Storage integration
-  - Image preview and validation
-  - Automatic image serving
-
-- **Responsive Design**
-  - Mobile-friendly interface
-  - Tailwind CSS styling
-  - Modern UI components
-
-## 📸 Screenshots
-
-### User Interface
-
-#### Login Page
-![Login Page](Screenshot/LoginPage.png)
-*Secure login interface with email and password fields.*
-
-#### Register Page
-![Register Page](Screenshot/RegisterPage.png)
-*User registration form.*
-
-#### Admin Dashboard
-![Admin Dashboard](Screenshot/AdminDashBoard.png)
-*Admin dashboard showing product statistics and recent items.*
-
-#### User Dashboard
-![User Dashboard](Screenshot/UserDashBoard.png)
-*User dashboard with product overview.*
-
-#### Admin Products List
-![Admin Products List](Screenshot/AdminProducts.png)
-*Admin product listing with management options.*
-
-#### User Products List
-![User Products List](Screenshot/UserProducts.png)
-*User product listing with search and filters.*
-
-### API Testing (Postman)
-
-*Note: API testing screenshots not available in current folder. Add Postman screenshots here when available.*
-
-#### Authentication
-![Auth API](Screenshot/api-auth.png)
-*POST /api/auth/login endpoint testing.*
-
-#### Products CRUD
-![Products API](Screenshot/api-products.png)
-*GET /api/products endpoint with pagination.*
-
-#### Product Creation
-![Create Product API](Screenshot/api-create-product.png)
-*POST /api/products with form data and image upload.*
-
+Database
+Firebase Firestore is used. Configure your Firebase project and 
+add the credentials to your `.env` file.
