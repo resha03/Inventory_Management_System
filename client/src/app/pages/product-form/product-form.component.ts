@@ -11,7 +11,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, NavbarComponent],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
+    <div class="min-h-screen bg-gradient-to-br from-white via-emerald-50 to-emerald-100">
       <app-navbar />
 
       <div class="max-w-4xl mx-auto px-6 py-10">
@@ -45,7 +45,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                     Product Name <span class="text-red-500">*</span>
                   </label>
                   <input type="text" formControlName="name" placeholder="e.g. MacBook Pro"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 focus:bg-white hover:border-slate-300" />
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
                   <p *ngIf="f['name'].touched && f['name'].invalid" class="mt-2 text-xs text-red-500">Name is required</p>
                 </div>
                 <div>
@@ -53,7 +53,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                     Category <span class="text-red-500">*</span>
                   </label>
                   <input type="text" formControlName="category" placeholder="e.g. Electronics"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 focus:bg-white hover:border-slate-300" />
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
                   <p *ngIf="f['category'].touched && f['category'].invalid" class="mt-2 text-xs text-red-500">Category required</p>
                 </div>
               </div>
@@ -62,17 +62,14 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
               <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Description</label>
                 <textarea formControlName="description" placeholder="Product description..."
-                  class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 focus:bg-white hover:border-slate-300 resize-vertical min-h-[120px]"></textarea>
-              </div>
-
-              <!-- Price + Quantity Row -->
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300 resize-vertical min-h-[120px]"></textarea>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">
                     Price (₱) <span class="text-red-500">*</span>
                   </label>
                   <input type="number" formControlName="price" placeholder="0.00" min="0" step="0.01"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 focus:bg-white hover:border-slate-300" />
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
                   <p *ngIf="f['price'].touched && f['price'].invalid" class="mt-2 text-xs text-red-500">Valid price required</p>
                 </div>
                 <div>
@@ -80,21 +77,15 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                     Quantity <span class="text-red-500">*</span>
                   </label>
                   <input type="number" formControlName="quantity" placeholder="0" min="0"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 focus:bg-white hover:border-slate-300" />
-                  <p *ngIf="f['quantity'].touched && f['quantity'].invalid" class="mt-2 text-xs text-red-500">Valid quantity required</p>
-                </div>
-              </div>
-
-              <!-- Image Upload -->
-              <div>
+                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
                 <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Product Image</label>
-                <div class="relative border-2 border-dashed border-slate-200 rounded-[28px] p-8 text-center transition-all duration-300 cursor-pointer hover:border-teal-400 hover:bg-teal-50 group">
+                <div class="relative border-2 border-dashed border-slate-200 rounded-[28px] p-8 text-center transition-all duration-300 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 group">
                   <input type="file" (change)="onFile(\$event)" accept="image/jpeg,image/png,image/gif,image/webp"
                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-[28px]" />
                   <div *ngIf="!previewUrl" class="py-4">
                     <div class="flex justify-center mb-3">
-                      <div class="p-3 bg-teal-100 rounded-2xl group-hover:bg-teal-200 transition-colors">
-                        <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <div class="p-3 bg-emerald-100 rounded-2xl group-hover:bg-emerald-200 transition-colors">
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                         </svg>
                       </div>
@@ -104,7 +95,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                   </div>
                   <div *ngIf="previewUrl" class="py-4">
                     <img [src]="previewUrl" class="max-h-[160px] mx-auto rounded-xl object-cover shadow-md mb-3" />
-                    <p class="text-xs font-semibold text-teal-600">Click to change image</p>
+                    <p class="text-xs font-semibold text-emerald-600">Click to change image</p>
                   </div>
                 </div>
               </div>
@@ -112,7 +103,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
               <!-- Actions -->
               <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-slate-200">
                 <button type="submit" [disabled]="loading"
-                  class="flex-1 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 disabled:from-teal-400 disabled:to-teal-500 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                  class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:from-emerald-400 disabled:to-emerald-500 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
                   <svg *ngIf="loading" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>

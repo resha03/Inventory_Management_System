@@ -12,12 +12,12 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, RouterLink, NavbarComponent],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
+    <div class="min-h-screen bg-gradient-to-br from-white via-emerald-50 to-emerald-100">
       <app-navbar />
 
       <div class="max-w-7xl mx-auto px-6 py-10">
         <div class="mb-10 animate-fade-in">
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-teal-600">Overview</p>
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-700">Overview</p>
           <h1 class="mt-4 text-4xl font-extrabold text-slate-900 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Welcome back, {{ firstName }} 👋</h1>
           <p class="mt-3 text-sm text-slate-500">Here's what's happening with your inventory today.</p>
         </div>
@@ -73,13 +73,13 @@ import { environment } from '../../../environments/environment';
               <p class="text-sm font-semibold uppercase tracking-[0.28em] text-slate-500">Recent Products</p>
               <p class="mt-2 text-sm text-slate-500">Latest additions to inventory</p>
             </div>
-            <a routerLink="/products" class="inline-flex items-center rounded-full border border-teal-100 bg-gradient-to-r from-teal-50 to-teal-100 px-4 py-2 text-sm font-semibold text-teal-700 transition-all duration-300 hover:from-teal-100 hover:to-teal-200 hover:shadow-md hover:scale-105">
+            <a routerLink="/products" class="inline-flex items-center rounded-full border border-emerald-100 bg-gradient-to-r from-emerald-50 to-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700 transition-all duration-300 hover:from-emerald-100 hover:to-emerald-200 hover:shadow-md hover:scale-105">
               View all →
             </a>
           </div>
 
           <div *ngIf="loading" class="px-6 py-12 text-center text-slate-500">
-            <div class="mx-auto mb-3 h-11 w-11 animate-spin rounded-full border-2 border-slate-200 border-t-teal-500"></div>
+            <div class="mx-auto mb-3 h-11 w-11 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-500"></div>
             <p class="text-sm">Loading products...</p>
           </div>
 
@@ -122,7 +122,7 @@ import { environment } from '../../../environments/environment';
                     </div>
                   </td>
                   <td class="px-6 py-5">
-                    <span class="inline-flex rounded-full bg-gradient-to-r from-teal-100 to-teal-200 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700 shadow-sm">{{ p.category }}</span>
+                    <span class="inline-flex rounded-full bg-gradient-to-r from-emerald-100 to-emerald-200 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 shadow-sm">{{ p.category }}</span>
                   </td>
                   <td class="px-6 py-5 text-right font-semibold text-slate-900">₱{{ p.price | number:'1.0-0' }}</td>
                   <td class="px-6 py-5 text-right">

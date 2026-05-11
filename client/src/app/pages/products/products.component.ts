@@ -13,7 +13,7 @@ import { Product } from '../../models';
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule, NavbarComponent],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
+    <div class="min-h-screen bg-gradient-to-br from-white via-emerald-50 to-emerald-100">
       <app-navbar />
 
       <div class="max-w-7xl mx-auto px-6 py-10">
@@ -21,11 +21,11 @@ import { Product } from '../../models';
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 animate-fade-in">
           <div class="mb-6 sm:mb-0">
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-teal-600">Inventory</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-700">Inventory</p>
             <h1 class="mt-2 text-4xl font-extrabold text-slate-900">Products</h1>
           </div>
           <a *ngIf="auth.isAdmin()" routerLink="/products/new"
-             class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25 no-underline transform hover:scale-[1.02]">
+             class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 no-underline transform hover:scale-[1.02]">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add Product
           </a>
@@ -38,10 +38,10 @@ import { Product } from '../../models';
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input type="text" [(ngModel)]="search" (ngModelChange)="onSearch()" placeholder="Search products..."
-              class="w-full bg-white border border-slate-200 rounded-[24px] pl-11 pr-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 hover:border-slate-300" />
+              class="w-full bg-white border border-slate-200 rounded-[24px] pl-11 pr-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 hover:border-slate-300" />
           </div>
           <select [(ngModel)]="category" (ngModelChange)="onSearch()"
-            class="bg-white border border-slate-200 rounded-[24px] px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 hover:border-slate-300 min-w-[200px]">
+            class="bg-white border border-slate-200 rounded-[24px] px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 hover:border-slate-300 min-w-[200px]">
             <option value="">All Categories</option>
             <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
           </select>
@@ -49,8 +49,7 @@ import { Product } from '../../models';
 
         <!-- Loading -->
         <div *ngIf="loading" class="py-20 text-center">
-          <div class="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-slate-200 border-t-teal-500"></div>
-          <p class="text-sm text-slate-500">Loading products...</p>
+          <div class="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-500"></div>
         </div>
 
         <!-- Empty -->
@@ -97,7 +96,7 @@ import { Product } from '../../models';
                   </td>
 
                   <td class="px-6 py-5">
-                    <span class="inline-flex rounded-full bg-teal-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700">{{ p.category }}</span>
+                    <span class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">{{ p.category }}</span>
                   </td>
 
                   <td class="px-6 py-5 text-right font-semibold text-slate-900">₱{{ p.price | number:'1.0-0' }}</td>
@@ -113,7 +112,7 @@ import { Product } from '../../models';
                   <td *ngIf="auth.isAdmin()" class="px-6 py-5 text-right">
                     <div class="flex items-center justify-end gap-2">
                       <a [routerLink]="['/products/edit', p.id]"
-                         class="inline-flex rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-semibold text-teal-700 transition-all duration-200 hover:bg-teal-100 hover:border-teal-300 no-underline">
+                         class="inline-flex rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700 transition-all duration-200 hover:bg-emerald-100 hover:border-emerald-300 no-underline">
                         Edit
                       </a>
                       <button (click)="delete(p.id!)"
@@ -134,14 +133,14 @@ import { Product } from '../../models';
             </p>
             <div class="flex items-center gap-2">
               <button (click)="changePage(pagination.page - 1)" [disabled]="pagination.page <= 1"
-                class="px-4 py-2 text-sm font-semibold border border-slate-200 rounded-lg bg-white text-slate-700 transition-all hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                class="px-4 py-2 text-sm font-semibold border border-emerald-200 rounded-lg bg-white text-slate-700 transition-all hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed">
                 ← Prev
               </button>
               <span class="px-3 py-2 text-sm font-semibold text-slate-600">
                 {{ pagination.page }} / {{ pagination.totalPages }}
               </span>
               <button (click)="changePage(pagination.page + 1)" [disabled]="pagination.page >= pagination.totalPages"
-                class="px-4 py-2 text-sm font-semibold border border-slate-200 rounded-lg bg-white text-slate-700 transition-all hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                class="px-4 py-2 text-sm font-semibold border border-emerald-200 rounded-lg bg-white text-slate-700 transition-all hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed">
                 Next →
               </button>
             </div>
