@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { db } from '../config/firebase';
-import { User } from '../types';
+import * as jwt from 'jsonwebtoken';
+import { supabase } from '../config/supabase';
+import { DbUser, User } from '../types';
 
 const getValidationErrorMessage = (req: Request): string | null => {
   const errors = validationResult(req);
@@ -24,38 +24,50 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const { name, email, password, role = 'user' } = req.body;
 
-    // Check if email already exists
-    const existing = await db.collection('users').where('email', '==', email).get();
-    if (!existing.empty) {
+    const { data: existingUsers, error: existingError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .limit(1);
+
+    if (existingError) {
+      throw existingError;
+    }
+
+    if (existingUsers?.length) {
       res.status(400).json({ message: 'Email already in use' });
       return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const roleValue = role === 'admin' ? 'admin' : 'user';
 
-    const newUser: User = {
-      name,
-      email,
-      password: hashedPassword,
-      role: role === 'admin' ? 'admin' : 'user',
-      createdAt: undefined,
-    };
+    const { data: newUserData, error: insertError } = await supabase
+      .from('users')
+      .insert({
+        name,
+        email,
+        password: hashedPassword,
+        role: roleValue,
+        created_at: new Date().toISOString(),
+      })
+      .select('id,name,email,role')
+      .single();
 
-    const docRef = await db.collection('users').add({
-      ...newUser,
-      createdAt: new Date(),
-    });
+    if (insertError || !newUserData) {
+      throw insertError || new Error('Failed to create user');
+    }
 
     const token = jwt.sign(
-      { uid: docRef.id, email, role: newUser.role },
-      process.env.JWT_SECRET as string,
-      { expiresIn: (process.env.JWT_EXPIRES_IN as any) }
+      { uid: newUserData.id, email, role: newUserData.role },
+      process.env.JWT_SECRET ?? 'secret',
+      { expiresIn: process.env.JWT_EXPIRES_IN ?? '7d' } as unknown as jwt.SignOptions
     );
 
     res.status(201).json({
       message: 'User registered successfully',
       token,
-      user: { id: docRef.id, name, email, role: newUser.role },
+      user: { id: newUserData.id, name: newUserData.name, email: newUserData.email, role: newUserData.role },
     });
   } catch (error) {
     console.error(error);
@@ -74,15 +86,22 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const { email, password } = req.body;
 
-    const snapshot = await db.collection('users').where('email', '==', email).get();
-    if (snapshot.empty) {
+    const { data: users, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .limit(1);
+
+    if (error) {
+      throw error;
+    }
+
+    if (!users || users.length === 0) {
       res.status(401).json({ message: 'Invalid credentials' });
       return;
     }
 
-    const userDoc = snapshot.docs[0];
-    const userData = userDoc.data() as User;
-
+    const userData = users[0];
     const isMatch = await bcrypt.compare(password, userData.password);
     if (!isMatch) {
       res.status(401).json({ message: 'Invalid credentials' });
@@ -90,16 +109,16 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     const token = jwt.sign(
-      { uid: userDoc.id, email: userData.email, role: userData.role },
-      process.env.JWT_SECRET as string,
-      { expiresIn: (process.env.JWT_EXPIRES_IN as any) }
+      { uid: userData.id, email: userData.email, role: userData.role },
+      process.env.JWT_SECRET ?? 'secret',
+      { expiresIn: process.env.JWT_EXPIRES_IN ?? '7d' } as unknown as jwt.SignOptions
     );
 
     res.json({
       message: 'Login successful',
       token,
       user: {
-        id: userDoc.id,
+        id: userData.id,
         name: userData.name,
         email: userData.email,
         role: userData.role,
@@ -114,18 +133,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 // GET /api/auth/me
 export const getMe = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userDoc = await db.collection('users').doc(req.user!.uid).get();
-    if (!userDoc.exists) {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id,name,email,role')
+      .eq('id', req.user!.uid)
+      .single();
+
+    if (error || !data) {
       res.status(404).json({ message: 'User not found' });
       return;
     }
-    const data = userDoc.data() as User;
-    res.json({
-      id: userDoc.id,
-      name: data.name,
-      email: data.email,
-      role: data.role,
-    });
+
+    res.json(data);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }

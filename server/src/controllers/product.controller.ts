@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
-import { db } from '../config/firebase';
-import { Product } from '../types';
-import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../config/supabase';
+import { DbProduct, Product } from '../types';
 
-const COLLECTION = 'products';
+const normalizeProduct = (row: DbProduct): Product => ({
+  id: row.id,
+  name: row.name,
+  description: row.description,
+  category: row.category,
+  quantity: row.quantity,
+  price: row.price,
+  imageUrl: row.image_url || '',
+  createdBy: row.created_by,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+});
 
 // GET /api/products  — list with search, filter, pagination
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
@@ -11,36 +21,30 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
     const { search, category, page = '1', limit = '10' } = req.query;
     const pageNum = parseInt(page as string, 10);
     const limitNum = parseInt(limit as string, 10);
+    const searchText = typeof search === 'string' ? search.trim() : '';
 
-    let query: FirebaseFirestore.Query = db.collection(COLLECTION);
+    let query = supabase.from('products').select('*', { count: 'exact' });
 
     if (category && category !== '') {
-      query = query.where('category', '==', category);
+      query = query.eq('category', category as string);
     }
 
-    const snapshot = await query.get();
-    let products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Product[];
-
-    products = products.sort((a, b) => {
-      const aTime = a.createdAt && (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate().getTime() : 0;
-      const bTime = b.createdAt && (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate().getTime() : 0;
-      return bTime - aTime;
-    });
-
-    if (search) {
-      const searchLower = (search as string).toLowerCase();
-      products = products.filter(p =>
-        p.name.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower)
-      );
+    if (searchText) {
+      const safeSearch = searchText.replace(/'/g, "''");
+      query = query.or(`name.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%`);
     }
 
-    const total = products.length;
-    const start = (pageNum - 1) * limitNum;
-    const paginated = products.slice(start, start + limitNum);
+    query = query.order('created_at', { ascending: false });
+    query = query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    const { data, count, error } = await query;
+    if (error) throw error;
+
+    const products = (data || []).map(normalizeProduct);
+    const total = count ?? products.length;
 
     res.json({
-      data: paginated,
+      data: products,
       pagination: {
         total,
         page: pageNum,
@@ -57,13 +61,20 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 // GET /api/products/:id
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const doc = await db.collection(COLLECTION).doc(req.params.id).get();
-    if (!doc.exists) {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+
+    if (error || !data) {
       res.status(404).json({ message: 'Product not found' });
       return;
     }
-    res.json({ id: doc.id, ...doc.data() });
+
+    res.json(normalizeProduct(data));
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Failed to fetch product' });
   }
 };
@@ -72,30 +83,29 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, description, category, quantity, price } = req.body;
+    const image_url = req.file ? `/uploads/${req.file.filename}` : '';
 
-    const imageUrl = req.file
-      ? `/uploads/${req.file.filename}`
-      : '';
+    const { data, error } = await supabase
+      .from('products')
+      .insert({
+        name,
+        description,
+        category,
+        quantity: Number(quantity),
+        price: Number(price),
+        image_url,
+        created_by: req.user!.uid,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .select('*')
+      .single();
 
-    const product: Omit<Product, 'id'> = {
-      name,
-      description,
-      category,
-      quantity: Number(quantity),
-      price: Number(price),
-      imageUrl,
-      createdBy: req.user!.uid,
-      createdAt: undefined,
-      updatedAt: undefined,
-    };
+    if (error || !data) {
+      throw error || new Error('Failed to create product');
+    }
 
-    const docRef = await db.collection(COLLECTION).add({
-      ...product,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
-    res.status(201).json({ id: docRef.id, ...product, message: 'Product created' });
+    res.status(201).json({ message: 'Product created', ...normalizeProduct(data) });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to create product' });
@@ -105,28 +115,43 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
 // PUT /api/products/:id
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const docRef = db.collection(COLLECTION).doc(req.params.id);
-    const doc = await docRef.get();
+    const { data: existing, error: existingError } = await supabase
+      .from('products')
+      .select('id')
+      .eq('id', req.params.id)
+      .single();
 
-    if (!doc.exists) {
+    if (existingError || !existing) {
       res.status(404).json({ message: 'Product not found' });
       return;
     }
 
     const { name, description, category, quantity, price } = req.body;
-    const updates: Partial<Product> = {};
+    const updates: any = {
+      updated_at: new Date().toISOString(),
+    };
 
     if (name !== undefined) updates.name = name;
     if (description !== undefined) updates.description = description;
     if (category !== undefined) updates.category = category;
     if (quantity !== undefined) updates.quantity = Number(quantity);
     if (price !== undefined) updates.price = Number(price);
-    if (req.file) updates.imageUrl = `/uploads/${req.file.filename}`;
+    if (req.file) updates.image_url = `/uploads/${req.file.filename}`;
 
-    await docRef.update({ ...updates, updatedAt: new Date() });
+    const { data, error } = await supabase
+      .from('products')
+      .update(updates)
+      .eq('id', req.params.id)
+      .select('*')
+      .single();
 
-    res.json({ message: 'Product updated', id: req.params.id, ...updates });
+    if (error || !data) {
+      throw error || new Error('Failed to update product');
+    }
+
+    res.json({ message: 'Product updated', ...normalizeProduct(data) });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Failed to update product' });
   }
 };
@@ -134,17 +159,19 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
 // DELETE /api/products/:id
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const docRef = db.collection(COLLECTION).doc(req.params.id);
-    const doc = await docRef.get();
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', req.params.id);
 
-    if (!doc.exists) {
+    if (error) {
       res.status(404).json({ message: 'Product not found' });
       return;
     }
 
-    await docRef.delete();
     res.json({ message: 'Product deleted successfully' });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Failed to delete product' });
   }
 };
@@ -152,10 +179,13 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
 // GET /api/products/categories  — unique categories list
 export const getCategories = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const snapshot = await db.collection(COLLECTION).get();
-    const categories = [...new Set(snapshot.docs.map(d => d.data().category as string))];
-    res.json(categories.filter(Boolean));
+    const { data, error } = await supabase.from('products').select('category');
+    if (error) throw error;
+
+    const categories = [...new Set((data || []).map((item) => item.category).filter(Boolean))];
+    res.json(categories);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Failed to fetch categories' });
   }
 };

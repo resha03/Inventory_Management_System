@@ -11,10 +11,10 @@ A web-based Inventory Management System developed by Reysha03.
 
 ## Programming Tools & Technologies
 
-- **Frontend:** React.js + Vite
+- **Frontend:** Angular
 - **Backend:** Node.js + Express
-- **Database:** Firebase Firestore
-- **Authentication:** Firebase Auth
+- **Database:** Supabase
+- **Authentication:** Custom JWT auth via backend
 - **Hosting:** Vercel (Frontend) + Render (Backend)
 
 
@@ -51,7 +51,7 @@ A web-based Inventory Management System developed by Reysha03.
 ## Requirements
 
 - Node.js v18+
-- Firebase account
+- Supabase account
 - npm or yarn
 
 
@@ -59,10 +59,9 @@ A web-based Inventory Management System developed by Reysha03.
 
 1. Clone the repository
 2. Run `npm install` inside the `client` folder
-3. Add your `.env` file with Firebase config
-4. Run `npm run dev` to start locally
+3. Add your `server/.env` file with Supabase config
+4. Run `npm run dev` in the `server` folder to start the backend locally
 
 
 ## Database
-Firebase Firestore is used. Configure your Firebase project and 
-add the credentials to your `.env` file.
+Supabase is used. Configure your Supabase project and add the credentials to `server/.env`. We use the `users` and `products` tables for the backend API.

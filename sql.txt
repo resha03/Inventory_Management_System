@@ -1,0 +1,28 @@
+-- Supabase SQL schema for Inventory System
+
+create table users (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text unique not null,
+  password text not null,
+  role text not null default 'user',
+  created_at timestamptz not null default now()
+);
+
+create table products (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  description text not null,
+  category text not null,
+  quantity int not null default 0,
+  price numeric not null default 0,
+  image_url text,
+  created_by uuid references users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+-- Optional indexes for faster lookups
+create index idx_users_email on users(email);
+create index idx_products_category on products(category);
+create index idx_products_created_by on products(created_by);

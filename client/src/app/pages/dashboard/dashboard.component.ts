@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { AuthService } from '../../services/auth.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -166,16 +167,16 @@ export class DashboardComponent implements OnInit {
   constructor(public auth: AuthService, private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.productService.getProducts({ page: 1, limit: 100 }).subscribe({
+    this.productService.getProducts({ page: 1, limit: 100 }).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
       next: (res) => {
-        this.totalProducts = res.pagination.total;
+        this.totalProducts = res?.pagination?.total ?? res.data.length;
         this.lowStock = res.data.filter(p => p.quantity <= 5).length;
         this.recentProducts = res.data.slice(0, 5);
-        this.loading = false;
       },
       error: (err) => {
         console.error('Failed to load products:', err);
-        this.loading = false;
       },
     });
     this.productService.getCategories().subscribe({

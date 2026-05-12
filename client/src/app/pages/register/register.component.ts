@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -137,11 +138,12 @@ export class RegisterComponent {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true; this.error = '';
     const { name, email, password, role } = this.form.value;
-    this.auth.register({ name, email, password, role }).subscribe({
+    this.auth.register({ name, email, password, role }).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
       next: () => this.router.navigate(['/dashboard']),
       error: (e) => {
         this.error = e?.error?.message || e?.message || 'Registration failed.';
-        this.loading = false;
       },
     });
   }

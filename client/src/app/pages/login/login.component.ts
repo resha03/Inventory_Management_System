@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -107,9 +108,11 @@ export class LoginComponent {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true; this.error = '';
     const { email, password } = this.form.value;
-    this.auth.login({ email, password }).subscribe({
+    this.auth.login({ email, password }).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
       next: () => this.router.navigate(['/dashboard']),
-      error: (e: any) => { this.error = e?.error?.message || 'Invalid credentials.'; this.loading = false; },
+      error: (e: any) => { this.error = e?.error?.message || 'Invalid credentials.'; },
     });
   }
 }

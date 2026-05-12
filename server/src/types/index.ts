@@ -4,7 +4,16 @@ export interface User {
   email: string;
   password: string;
   role: 'admin' | 'user';
-  createdAt?: FirebaseFirestore.Timestamp;
+  createdAt?: string;
+}
+
+export interface DbUser {
+  id?: string;
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'user';
+  created_at?: string;
 }
 
 export interface Product {
@@ -16,8 +25,21 @@ export interface Product {
   price: number;
   imageUrl?: string;
   createdBy: string;
-  createdAt?: FirebaseFirestore.Timestamp;
-  updatedAt?: FirebaseFirestore.Timestamp;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface DbProduct {
+  id?: string;
+  name: string;
+  description: string;
+  category: string;
+  quantity: number;
+  price: number;
+  image_url?: string;
+  created_by: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface AuthRequest extends Express.Request {
