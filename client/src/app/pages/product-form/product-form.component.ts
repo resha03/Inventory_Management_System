@@ -213,7 +213,12 @@ export class ProductFormComponent implements OnInit {
     if (this.selectedFile) fd.append('image', this.selectedFile);
     const req = this.isEdit ? this.productService.updateProduct(this.productId, fd) : this.productService.createProduct(fd);
     req.subscribe({
-      next: () => this.router.navigate(['/products']),
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/products']).then(() => {
+          window.location.href = '/products';
+        });
+      },
       error: (err) => { this.error = err.error?.message || 'Failed to save product'; this.loading = false; },
     });
   }
