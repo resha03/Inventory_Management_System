@@ -10,105 +10,78 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   template: `
     <div class="min-h-screen bg-gradient-to-br from-white via-emerald-50 to-emerald-100 flex items-center justify-center px-4 py-10">
-      <div class="relative w-full max-w-6xl overflow-hidden rounded-[32px] bg-white shadow-[0_30px_60px_-30px_rgba(15,23,42,0.45)] transform transition-all duration-500 hover:shadow-[0_40px_80px_-40px_rgba(15,23,42,0.6)]">
-        <div class="absolute -left-28 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-emerald-200 to-emerald-300 opacity-80 blur-3xl animate-pulse"></div>
-        <div class="absolute -right-28 -bottom-24 h-72 w-72 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 opacity-80 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-gradient-to-r from-emerald-100 to-emerald-200 opacity-30 blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-
-        <div class="grid min-h-[680px] grid-cols-1 lg:grid-cols-[1.15fr_0.85fr]">
-          <div class="hidden lg:flex flex-col justify-between bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-600 p-12 text-white relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-transparent"></div>
-            <div class="relative z-10">
-              <div class="flex items-center gap-3 mb-10">
-                <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 shadow-lg shadow-slate-950/10 backdrop-blur-sm border border-white/20">
-                  <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path d="M12 4v16" />
-                    <path d="M4 12h16" />
-                  </svg>
-                </div>
-                <div>
-                  <p class="text-xs uppercase tracking-[0.35em] text-slate-300">Inventrack</p>
-                  <h1 class="text-3xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">Inventory made easy</h1>
-                </div>
-              </div>
-              <div class="grid gap-5">
-                <div class="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-xl shadow-slate-950/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                  <p class="text-xs uppercase tracking-[0.3em] text-slate-300">Insights</p>
-                  <p class="mt-3 text-lg font-semibold">Stay on top of stock in real time.</p>
-                </div>
-                <div class="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-xl shadow-slate-950/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 transform hover:scale-105" style="animation-delay: 0.1s;">
-                  <p class="text-xs uppercase tracking-[0.3em] text-slate-300">Security</p>
-                  <p class="mt-3 text-lg font-semibold">Secure login with role-based access.</p>
-                </div>
-              </div>
-            </div>
-            <div class="relative z-10 space-y-4">
-              <p class="text-sm text-slate-300">Unlock faster workflows with clean inventory tracking.</p>
-              <div class="flex items-center gap-3 text-slate-200">
-                <span class="inline-flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Optimized for modern teams</span>
-              </div>
-            </div>
+      <div class="w-full max-w-md rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_24px_70px_-38px_rgba(15,23,42,0.6)] sm:p-10">
+        <div class="mb-8 text-center">
+          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-700 text-white shadow-lg shadow-emerald-700/20">
+            <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4.5 8.5 12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" />
+              <path d="M4.8 8.7 12 13l7.2-4.3" />
+              <path d="M12 13v7" />
+              <path d="M8.5 6.4 16 10.8" />
+            </svg>
           </div>
-
-          <div class="relative flex items-center justify-center bg-white p-10 sm:p-14">
-            <div class="w-full max-w-md transform transition-all duration-500">
-              <div class="mb-10 text-center">
-                <p class="text-sm uppercase tracking-[0.3em] text-emerald-600 font-semibold">Welcome back</p>
-                <h2 class="mt-4 text-3xl font-semibold text-slate-900">Sign in to your workspace</h2>
-                <p class="mt-2 text-sm text-slate-500">Enter your details and start managing stock faster.</p>
-              </div>
-
-              <div *ngIf="error" class="mb-6 rounded-[28px] border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700 animate-fade-in">
-                {{ error }}
-              </div>
-
-              <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
-                <label class="block group">
-                  <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Email address</span>
-                  <input formControlName="email" type="email" placeholder="you@example.com"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
-                  <p *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="mt-2 text-xs text-red-500 animate-fade-in">Please enter a valid email.</p>
-                </label>
-
-                <label class="block group">
-                  <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Password</span>
-                  <div class="relative">
-                    <input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="••••••••"
-                      class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 pr-10 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
-                    <button type="button" (click)="togglePasswordVisibility()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
-                      <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M2 2l20 20" />
-                        <path d="M9.88 9.88A3 3 0 0112 9c1.38 0 2.5 1.12 2.5 2.5" />
-                        <path d="M14.12 14.12A3 3 0 0112 15" />
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      </svg>
-                    </button>
-                  </div>
-                  <p *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="mt-2 text-xs text-red-500 animate-fade-in">Password is required.</p>
-                </label>
-
-                <button type="submit" [disabled]="loading"
-                  class="flex w-full items-center justify-center gap-2 rounded-[24px] bg-gradient-to-r from-emerald-600 to-emerald-700 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:from-emerald-700 hover:to-emerald-800 hover:shadow-lg hover:shadow-emerald-500/25 disabled:cursor-not-allowed disabled:from-emerald-400 disabled:to-emerald-500 transform hover:scale-[1.02] active:scale-[0.98]">
-                  <svg *ngIf="loading" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                  </svg>
-                  {{ loading ? 'Signing in...' : 'Sign in' }}
-                </button>
-              </form>
-
-              <p class="mt-6 text-center text-sm text-slate-500">
-                Don't have an account?
-                <a routerLink="/register" class="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors duration-200 hover:underline">Create one</a>
-              </p>
-            </div>
-          </div>
+          <p class="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-700">Inventrack</p>
+          <h1 class="mt-7 text-3xl font-bold text-slate-950">Welcome back</h1>
+          <p class="mt-2 text-sm text-slate-500">Sign in to your workspace to manage stock faster.</p>
         </div>
+
+        <div *ngIf="error" class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700 animate-fade-in">
+          {{ error }}
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
+          <label class="block group">
+            <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Email address</span>
+            <div class="relative">
+              <svg class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6h16v12H4z" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+              <input formControlName="email" type="email" placeholder="you@example.com"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 hover:border-slate-300" />
+            </div>
+            <p *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="mt-2 text-xs text-red-500 animate-fade-in">Please enter a valid email.</p>
+          </label>
+
+          <label class="block group">
+            <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Password</span>
+            <div class="relative">
+              <svg class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="10" width="14" height="10" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              <input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 hover:border-slate-300" />
+              <button type="button" (click)="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700">
+                <svg *ngIf="!showPassword" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg *ngIf="showPassword" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 2l20 20" />
+                  <path d="M8.5 8.7A9.6 9.6 0 0 1 12 8c6 0 9.5 4 9.5 4a13.4 13.4 0 0 1-3 3.1" />
+                  <path d="M15 15.5a3 3 0 0 1-4-4" />
+                  <path d="M6 6.8C3.7 8.2 2.5 12 2.5 12s3.5 6 9.5 6c1.2 0 2.3-.2 3.3-.6" />
+                </svg>
+              </button>
+            </div>
+            <p *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="mt-2 text-xs text-red-500 animate-fade-in">Password is required.</p>
+          </label>
+
+          <button type="submit" [disabled]="loading"
+            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-emerald-800 hover:shadow-lg hover:shadow-emerald-700/20 disabled:cursor-not-allowed disabled:bg-emerald-400">
+            <svg *ngIf="loading" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+            </svg>
+            {{ loading ? 'Signing in...' : 'Sign in' }}
+          </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-slate-500">
+          Don't have an account?
+          <a routerLink="/register" class="font-semibold text-emerald-700 transition-colors duration-200 hover:text-emerald-800 hover:underline">Create one</a>
+        </p>
       </div>
     </div>
   `,
@@ -121,7 +94,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
-      email:    ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }

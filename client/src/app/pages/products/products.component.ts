@@ -26,9 +26,10 @@ import { Product } from '../../models';
           </div>
           <a *ngIf="auth.isAdmin()" routerLink="/products/new"
              class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 no-underline transform hover:scale-[1.02]">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M12 5v14" />
-              <path d="M5 12h14" />
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 8.5 12 4l7 4.5v7L12 20l-7-4.5v-7Z" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
             </svg>
             Add Product
           </a>
@@ -56,8 +57,14 @@ import { Product } from '../../models';
           <div class="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-500"></div>
         </div>
 
+        <!-- Error -->
+        <div *ngIf="!loading && errorMessage" class="rounded-[28px] border border-red-200 bg-red-50 px-6 py-5 text-red-700 shadow-sm">
+          <p class="text-sm font-semibold">Unable to load products</p>
+          <p class="mt-1 text-sm">{{ errorMessage }}</p>
+        </div>
+
         <!-- Empty -->
-        <div *ngIf="!loading && products.length === 0" class="rounded-[32px] border border-slate-200 bg-white shadow-sm py-20 px-6 text-center">
+        <div *ngIf="!loading && !errorMessage && products.length === 0" class="rounded-[32px] border border-slate-200 bg-white shadow-sm py-20 px-6 text-center">
           <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
             <svg class="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -158,6 +165,7 @@ export class ProductsComponent implements OnInit {
   products: Product[] = [];
   categories: string[] = [];
   loading = true;
+  errorMessage = '';
   search = '';
   category = '';
   apiUrl = environment.apiUrl.replace(/\/api$/, '');
@@ -168,14 +176,23 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    this.productService.getCategories().subscribe(c => this.categories = c);
+    this.productService.getCategories().subscribe({
+      next: (c) => this.categories = c,
+      error: (err) => console.error('Failed to load categories:', err),
+    });
   }
 
   loadProducts(): void {
     this.loading = true;
+    this.errorMessage = '';
     this.productService.getProducts({ search: this.search, category: this.category, page: this.pagination.page, limit: this.pagination.limit }).subscribe({
       next: (res) => { this.products = res.data; this.pagination = res.pagination; this.loading = false; },
-      error: () => { this.loading = false; },
+      error: (err) => {
+        console.error('Failed to load products:', err);
+        this.products = [];
+        this.errorMessage = err?.error?.message || 'Please check your connection, login again, or try after the backend finishes starting up.';
+        this.loading = false;
+      },
     });
   }
 

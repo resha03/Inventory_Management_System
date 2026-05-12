@@ -9,29 +9,31 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <nav class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         <!-- Logo -->
         <div class="flex items-center gap-8">
-          <a routerLink="/dashboard" class="flex items-center gap-2.5 no-underline">
-            <div class="w-8 h-8 bg-emerald-700 rounded-lg flex items-center justify-center shadow-md shadow-emerald-100/50">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path d="M12 4v16" />
-                <path d="M4 12h16" />
+          <a routerLink="/dashboard" class="flex items-center gap-3 no-underline">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-700 text-white">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4.5 8.5 12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" />
+                <path d="M4.8 8.7 12 13l7.2-4.3" />
+                <path d="M12 13v7" />
+                <path d="M8.5 6.4 16 10.8" />
               </svg>
             </div>
-            <span class="text-slate-900 font-bold text-lg tracking-tight">Inventrack</span>
+            <span class="text-base font-bold tracking-tight text-slate-950">Inventrack</span>
           </a>
 
           <!-- Nav Links -->
           <div class="hidden md:flex items-center gap-1">
             <a routerLink="/dashboard" routerLinkActive="bg-emerald-50 text-emerald-700"
-               class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors no-underline">
+               class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors no-underline hover:bg-slate-100 hover:text-slate-950">
               Dashboard
             </a>
             <a routerLink="/products" routerLinkActive="bg-emerald-50 text-emerald-700"
-               class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors no-underline">
+               class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors no-underline hover:bg-slate-100 hover:text-slate-950">
               Products
             </a>
           </div>
@@ -40,26 +42,27 @@ import { Router } from '@angular/router';
         <!-- Right side -->
         <div class="flex items-center gap-3">
           <a *ngIf="auth.isAdmin()" routerLink="/products/new"
-             class="hidden sm:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors no-underline shadow-sm shadow-emerald-200/40">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M12 5v14" />
-              <path d="M5 12h14" />
+             class="hidden items-center gap-1.5 rounded-lg bg-emerald-700 px-3 py-2 text-sm font-semibold text-white transition-colors no-underline hover:bg-emerald-800 sm:flex">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 8.5 12 4l7 4.5v7L12 20l-7-4.5v-7Z" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
             </svg>
             Add Product
           </a>
 
           <!-- User badge -->
-          <div class="flex items-center gap-2.5 pl-3 border-l border-slate-200">
-            <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+          <div class="flex items-center gap-2.5 border-l border-slate-200 pl-3">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50">
               <span class="text-xs font-bold text-emerald-700">{{ initials }}</span>
             </div>
             <div class="hidden sm:block">
-              <p class="text-sm font-semibold text-slate-800 leading-none">{{ userName }}</p>
-              <p class="text-xs text-slate-500 mt-0.5 capitalize">{{ auth.getCurrentUser()?.role }}</p>
+              <p class="text-sm font-semibold leading-none text-slate-950">{{ userName }}</p>
+              <p class="mt-0.5 text-xs capitalize text-slate-500">{{ auth.getCurrentUser()?.role }}</p>
             </div>
             <button (click)="logout()"
-              class="ml-1 p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition-all duration-200 font-semibold hover:shadow-md">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              class="ml-1 rounded-lg p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
                 <polyline points="16 17 21 12 16 7" />
                 <line x1="21" y1="12" x2="9" y2="12" />

@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "name": "inventory-management-system",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/client/browser",
-  "installCommand": "npm ci",
-  "framework": null,
+  "installCommand": "cd client && npm ci",
+  "buildCommand": "cd client && npm run build",
+  "outputDirectory": "client/dist/client/browser",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -27,8 +25,5 @@
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }

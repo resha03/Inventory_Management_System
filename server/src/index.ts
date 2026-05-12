@@ -22,9 +22,26 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+const allowedOrigins = [
+  'http://localhost:4200',
+  'https://inventory-system-mu-khaki.vercel.app',
+  'https://inventory-management-system-maq7.vercel.app',
+  process.env.CLIENT_URL,
+].filter(Boolean) as string[];
+
+const isAllowedVercelPreview = (origin: string): boolean =>
+  /^https:\/\/inventory-management-system-[a-z0-9-]+\.vercel\.app$/i.test(origin);
+
 // ─── Middleware ───────────────────────────────────────────
 app.use(cors({
-  origin: ['http://localhost:4200', 'https://inventory-system-mu-khaki.vercel.app'],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || isAllowedVercelPreview(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked origin: ${origin}`));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));

@@ -12,120 +12,136 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, RouterLink, NavbarComponent],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-white via-emerald-50 to-emerald-100">
+    <div class="min-h-screen bg-slate-50">
       <app-navbar />
 
-      <div class="max-w-7xl mx-auto px-6 py-10">
-        <div class="mb-10 animate-fade-in">
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-700">Overview</p>
-          <h1 class="mt-4 text-4xl font-extrabold text-slate-900 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Welcome back, {{ firstName }} 👋</h1>
-          <p class="mt-3 text-sm text-slate-500">Here's what's happening with your inventory today.</p>
-        </div>
-
-        <div class="grid gap-6 xl:grid-cols-3 mb-8">
-          <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 hover:scale-[1.02] animate-fade-in">
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-700 shadow-sm">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                </svg>
-              </div>
-              <span class="rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">Total</span>
-            </div>
-            <p class="text-5xl font-extrabold text-slate-900 mb-2">{{ totalProducts }}</p>
-            <p class="text-sm text-slate-500">Products</p>
+      <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <header class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wide text-emerald-700">Dashboard</p>
+            <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Welcome back, {{ firstName }}</h1>
+            <p class="mt-2 text-sm text-slate-600">Monitor products, stock levels, and categories from one place.</p>
           </div>
 
-          <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:scale-[1.02] animate-fade-in" style="animation-delay: 0.1s;">
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-red-100 to-red-200 text-red-600 shadow-sm">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M12 9v2" />
+          <a *ngIf="auth.isAdmin()" routerLink="/products/new"
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+            Add product
+          </a>
+        </header>
+
+        <section class="mb-8 grid gap-4 md:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.5 8.5 12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" />
+                  <path d="M4.8 8.7 12 13l7.2-4.3" />
+                  <path d="M12 13v7" />
+                </svg>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">Total</span>
+            </div>
+            <p class="mt-5 text-4xl font-bold text-slate-950">{{ totalProducts }}</p>
+            <p class="mt-1 text-sm font-medium text-slate-600">Products</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10.3 4.2 2.7 17.5A2 2 0 0 0 4.4 20h15.2a2 2 0 0 0 1.7-2.5L13.7 4.2a2 2 0 0 0-3.4 0Z" />
+                  <path d="M12 9v4" />
                   <path d="M12 17h.01" />
-                  <path d="M12 4a8 8 0 110 16 8 8 0 010-16z" />
                 </svg>
               </div>
-              <span class="rounded-full bg-red-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-red-600">Alert</span>
+              <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">Alert</span>
             </div>
-            <p class="text-5xl font-extrabold text-red-600 mb-2">{{ lowStock }}</p>
-            <p class="text-sm text-slate-500">Low Stock Items</p>
-          </div>
+            <p class="mt-5 text-4xl font-bold text-red-600">{{ lowStock }}</p>
+            <p class="mt-1 text-sm font-medium text-slate-600">Low stock items</p>
+          </article>
 
-          <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10 hover:scale-[1.02] animate-fade-in" style="animation-delay: 0.2s;">
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-600 shadow-sm">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 5h16v14H4z" />
+                  <path d="M4 10h16" />
+                  <path d="M9 5v14" />
+                  <path d="M15 5v14" />
                 </svg>
               </div>
-              <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-600">Active</span>
+              <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">Active</span>
             </div>
-            <p class="text-5xl font-extrabold text-slate-900 mb-2">{{ categories }}</p>
-            <p class="text-sm text-slate-500">Categories</p>
-          </div>
-        </div>
+            <p class="mt-5 text-4xl font-bold text-slate-950">{{ categories }}</p>
+            <p class="mt-1 text-sm font-medium text-slate-600">Categories</p>
+          </article>
+        </section>
 
-        <div class="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg animate-fade-in" style="animation-delay: 0.3s;">
-          <div class="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div class="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p class="text-sm font-semibold uppercase tracking-[0.28em] text-slate-500">Recent Products</p>
-              <p class="mt-2 text-sm text-slate-500">Latest additions to inventory</p>
+              <h2 class="text-base font-semibold text-slate-950">Recent products</h2>
+              <p class="mt-1 text-sm text-slate-600">Latest additions to inventory</p>
             </div>
-            <a routerLink="/products" class="inline-flex items-center rounded-full border border-emerald-100 bg-gradient-to-r from-emerald-50 to-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700 transition-all duration-300 hover:from-emerald-100 hover:to-emerald-200 hover:shadow-md hover:scale-105">
-              View all →
+            <a routerLink="/products" class="inline-flex items-center justify-center rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+              View all
             </a>
           </div>
 
-          <div *ngIf="loading" class="px-6 py-12 text-center text-slate-500">
-            <div class="mx-auto mb-3 h-11 w-11 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-500"></div>
-            <p class="text-sm">Loading products...</p>
+          <div *ngIf="loading" class="flex flex-col items-center justify-center px-6 py-16 text-slate-600">
+            <div class="mb-4 h-10 w-10 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-700"></div>
+            <p class="text-sm font-medium">Loading products...</p>
           </div>
 
-          <div *ngIf="!loading && recentProducts.length === 0" class="px-6 py-12 text-center text-slate-500">
-            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-3xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400 shadow-sm">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
+          <div *ngIf="!loading && recentProducts.length === 0" class="px-6 py-16 text-center">
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4.5 8.5 12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" />
+                <path d="M4.8 8.7 12 13l7.2-4.3" />
+                <path d="M12 13v7" />
               </svg>
             </div>
-            <p class="text-sm font-semibold text-slate-900">No products yet</p>
-            <p class="mt-2 text-sm text-slate-500">Add your first product to get started.</p>
+            <p class="text-sm font-semibold text-slate-950">No products yet</p>
+            <p class="mt-1 text-sm text-slate-600">Add your first product to start tracking inventory.</p>
           </div>
 
           <div *ngIf="!loading && recentProducts.length > 0" class="overflow-x-auto">
-            <table class="min-w-full border-separate border-spacing-0">
-              <thead>
-                <tr class="bg-gradient-to-r from-slate-50 to-slate-100 text-left text-xs uppercase tracking-[0.3em] text-slate-500">
-                  <th class="px-6 py-4 font-semibold">Product</th>
-                  <th class="px-6 py-4 font-semibold">Category</th>
-                  <th class="px-6 py-4 font-semibold text-right">Price</th>
-                  <th class="px-6 py-4 font-semibold text-right">Qty</th>
+            <table class="min-w-full divide-y divide-slate-200">
+              <thead class="bg-slate-50">
+                <tr class="text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <th class="px-5 py-3">Product</th>
+                  <th class="px-5 py-3">Category</th>
+                  <th class="px-5 py-3 text-right">Price</th>
+                  <th class="px-5 py-3 text-right">Qty</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let p of recentProducts; let i = index" class="border-b border-slate-200 hover:bg-gradient-to-r hover:from-slate-50 hover:to-transparent transition-all duration-200 hover:shadow-sm animate-fade-in" [style.animation-delay.ms]="i * 50">
-                  <td class="px-6 py-5">
-                    <div class="flex items-center gap-4">
-                      <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden shadow-sm transition-transform duration-200 hover:scale-110">
+              <tbody class="divide-y divide-slate-200 bg-white">
+                <tr *ngFor="let p of recentProducts" class="hover:bg-slate-50">
+                  <td class="px-5 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100 text-slate-500">
                         <img *ngIf="p.imageUrl" [src]="backendUrl + p.imageUrl" class="h-full w-full object-cover" />
-                        <svg *ngIf="!p.imageUrl" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <svg *ngIf="!p.imageUrl" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4.5 8.5 12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" />
+                          <path d="M4.8 8.7 12 13l7.2-4.3" />
                         </svg>
                       </div>
-                      <div>
-                        <p class="text-sm font-semibold text-slate-900">{{ p.name }}</p>
-                        <p class="text-xs text-slate-500 truncate" style="max-width:180px;">{{ p.description }}</p>
+                      <div class="min-w-0">
+                        <p class="truncate text-sm font-semibold text-slate-950">{{ p.name }}</p>
+                        <p class="truncate text-xs text-slate-500" style="max-width: 220px;">{{ p.description }}</p>
                       </div>
                     </div>
                   </td>
-                  <td class="px-6 py-5">
-                    <span class="inline-flex rounded-full bg-gradient-to-r from-emerald-100 to-emerald-200 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 shadow-sm">{{ p.category }}</span>
+                  <td class="px-5 py-4">
+                    <span class="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">{{ p.category }}</span>
                   </td>
-                  <td class="px-6 py-5 text-right font-semibold text-slate-900">₱{{ p.price | number:'1.0-0' }}</td>
-                  <td class="px-6 py-5 text-right">
-                    <span [ngClass]="p.quantity <= 5 ? 'bg-gradient-to-r from-red-100 to-red-200 text-red-600' : 'bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-700'" class="inline-flex rounded-full px-3 py-1 text-sm font-semibold shadow-sm">
+                  <td class="px-5 py-4 text-right text-sm font-semibold text-slate-950">₱{{ p.price | number:'1.0-0' }}</td>
+                  <td class="px-5 py-4 text-right">
+                    <span [ngClass]="p.quantity <= 5 ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'" class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold">
                       {{ p.quantity }}
                     </span>
                   </td>
@@ -133,8 +149,8 @@ import { environment } from '../../../environments/environment';
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   `,
 })
@@ -168,4 +184,3 @@ export class DashboardComponent implements OnInit {
     });
   }
 }
-
