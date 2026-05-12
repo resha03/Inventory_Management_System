@@ -33,10 +33,10 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
           <div class="p-8 sm:p-12">
 
             <!-- Error Alert -->
-            <!-- <div *ngIf="error" class="mb-8 rounded-[28px] border border-red-200 bg-red-50 px-6 py-4 text-red-700 flex items-center gap-3 animate-fade-in">
+            <div *ngIf="error" class="mb-8 rounded-[28px] border border-red-200 bg-red-50 px-6 py-4 text-red-700 flex items-center gap-3 animate-fade-in">
               <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               <p class="text-sm font-medium">{{ error }}</p>
-            </div> -->
+            </div>
 
             <form [formGroup]="form" (ngSubmit)="submit()">
 
@@ -88,12 +88,28 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
               <!-- Product Image -->
               <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Product Image</label>
-                <div class="relative border-2 border-dashed border-slate-200 rounded-[28px] p-8 text-center transition-all duration-300 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 group">
-                  <input type="file" (change)="onFile($event)" accept="image/jpeg,image/png,image/gif,image/webp"
+                <div
+                  class="relative border-2 border-dashed border-slate-200 rounded-[28px] p-4 text-center transition-all duration-300 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 group"
+                  [class.border-emerald-500]="dragActive"
+                  [class.bg-emerald-50]="dragActive"
+                  (dragover)="onDragOver($event)"
+                  (dragleave)="onDragLeave($event)"
+                  (drop)="onDrop($event)">
+                  <input type="file" (change)="onFile($event)" accept="image/jpeg,image/png,image/gif,image/webp, image/webp"
                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-[28px]" />
-                  <div class="py-4">
-                    <p class="text-sm font-semibold text-slate-900 mb-1">Click to upload image</p>
-                    <p class="text-xs text-slate-500">JPG, PNG, GIF, WEBP • Max 5MB</p>
+
+                  <div class="min-h-[220px] flex flex-col items-center justify-center gap-4 py-4 px-2">
+                    <ng-container *ngIf="previewUrl; else uploadPrompt">
+                      <img [src]="previewUrl" alt="Product preview" class="max-h-[240px] w-full rounded-[24px] object-contain" />
+                      <p class="text-sm text-slate-600">Image ready to upload. Click or drop a new image to replace it.</p>
+                    </ng-container>
+                    <ng-template #uploadPrompt>
+                      <div class="py-4">
+                        <p class="text-sm font-semibold text-slate-900 mb-1">Click or drag image here</p>
+                        <p class="text-xs text-slate-500">JPG, PNG, GIF, WEBP • Max 5MB</p>
+                        <p class="text-xs text-slate-400 mt-2">Drop the image anywhere inside the box.</p>
+                      </div>
+                    </ng-template>
                   </div>
                 </div>
               </div>
@@ -128,6 +144,7 @@ export class ProductFormComponent implements OnInit {
   productId = '';
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  dragActive = false;
   backendUrl = environment.apiUrl.replace(/\/api$/, '');
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private productService: ProductService) {
@@ -154,8 +171,33 @@ export class ProductFormComponent implements OnInit {
   }
 
   onFile(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
+    const file = (event.target as HTMLInputElement).files?.[0] || null;
+    this.processFile(file);
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.dragActive = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    this.dragActive = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.dragActive = false;
+    const file = event.dataTransfer?.files?.[0] || null;
+    this.processFile(file);
+  }
+
+  processFile(file: File | null): void {
     if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      this.error = 'Please upload a valid image file.';
+      return;
+    }
     this.selectedFile = file;
     const reader = new FileReader();
     reader.onload = (e) => { this.previewUrl = e.target?.result as string; };
