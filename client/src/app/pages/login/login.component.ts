@@ -22,8 +22,8 @@ import { AuthService } from '../../services/auth.service';
               <div class="flex items-center gap-3 mb-10">
                 <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 shadow-lg shadow-slate-950/10 backdrop-blur-sm border border-white/20">
                   <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <rect x="4" y="4" width="16" height="16" rx="4" />
-                    <path d="M8 8h8M8 12h8M8 16h8" />
+                    <path d="M12 4v16" />
+                    <path d="M4 12h16" />
                   </svg>
                 </div>
                 <div>
@@ -78,10 +78,14 @@ import { AuthService } from '../../services/auth.service';
                       class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 pr-10 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
                     <button type="button" (click)="togglePasswordVisibility()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
                       <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
                       </svg>
                       <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+                        <path d="M2 2l20 20" />
+                        <path d="M9.88 9.88A3 3 0 0112 9c1.38 0 2.5 1.12 2.5 2.5" />
+                        <path d="M14.12 14.12A3 3 0 0112 15" />
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                       </svg>
                     </button>
                   </div>

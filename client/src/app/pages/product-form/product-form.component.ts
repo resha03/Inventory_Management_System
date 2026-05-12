@@ -19,7 +19,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
         <!-- Back + Title -->
         <div class="mb-10 animate-fade-in">
           <a routerLink="/products" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 transition-colors mb-6 no-underline">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
             Back to Products
           </a>
           <h1 class="text-4xl font-extrabold text-slate-900 mb-2">{{ isEdit ? 'Edit Product' : 'Add New Product' }}</h1>

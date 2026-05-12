@@ -27,8 +27,7 @@ import { environment } from '../../../environments/environment';
             <div class="flex items-center justify-between mb-6">
               <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-700 shadow-sm">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
-                  <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
                 </svg>
               </div>
               <span class="rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">Total</span>
@@ -41,9 +40,9 @@ import { environment } from '../../../environments/environment';
             <div class="flex items-center justify-between mb-6">
               <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-red-100 to-red-200 text-red-600 shadow-sm">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                  <line x1="12" y1="9" x2="12" y2="13" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                  <path d="M12 9v2" />
+                  <path d="M12 17h.01" />
+                  <path d="M12 4a8 8 0 110 16 8 8 0 010-16z" />
                 </svg>
               </div>
               <span class="rounded-full bg-red-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-red-600">Alert</span>
@@ -56,8 +55,10 @@ import { environment } from '../../../environments/environment';
             <div class="flex items-center justify-between mb-6">
               <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-600 shadow-sm">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <rect x="2" y="3" width="20" height="14" rx="2" />
-                  <path d="M8 21h8m-4-4v4" />
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
                 </svg>
               </div>
               <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-600">Active</span>
@@ -86,7 +87,7 @@ import { environment } from '../../../environments/environment';
           <div *ngIf="!loading && recentProducts.length === 0" class="px-6 py-12 text-center text-slate-500">
             <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-3xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400 shadow-sm">
               <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
+                <rect x="3" y="3" width="18" height="18" rx="2" />
               </svg>
             </div>
             <p class="text-sm font-semibold text-slate-900">No products yet</p>
@@ -111,8 +112,6 @@ import { environment } from '../../../environments/environment';
                         <img *ngIf="p.imageUrl" [src]="backendUrl + p.imageUrl" class="h-full w-full object-cover" />
                         <svg *ngIf="!p.imageUrl" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
-                          <circle cx="8.5" cy="8.5" r="1.5" />
-                          <polyline points="21 15 16 10 5 21" />
                         </svg>
                       </div>
                       <div>

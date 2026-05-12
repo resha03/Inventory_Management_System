@@ -26,7 +26,10 @@ import { Product } from '../../models';
           </div>
           <a *ngIf="auth.isAdmin()" routerLink="/products/new"
              class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 no-underline transform hover:scale-[1.02]">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
             Add Product
           </a>
         </div>
@@ -35,7 +38,8 @@ import { Product } from '../../models';
         <div class="flex flex-col sm:flex-row gap-4 mb-8 animate-fade-in" style="animation-delay: 0.1s;">
           <div class="relative flex-1">
             <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             <input type="text" [(ngModel)]="search" (ngModelChange)="onSearch()" placeholder="Search products..."
               class="w-full bg-white border border-slate-200 rounded-[24px] pl-11 pr-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 hover:border-slate-300" />
@@ -56,7 +60,7 @@ import { Product } from '../../models';
         <div *ngIf="!loading && products.length === 0" class="rounded-[32px] border border-slate-200 bg-white shadow-sm py-20 px-6 text-center">
           <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
             <svg class="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+              <rect x="3" y="3" width="18" height="18" rx="2" />
             </svg>
           </div>
           <p class="text-lg font-semibold text-slate-900 mb-2">No products found</p>
@@ -85,7 +89,7 @@ import { Product } from '../../models';
                       <div class="h-12 w-12 flex-shrink-0 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center">
                         <img *ngIf="p.imageUrl" [src]="apiUrl + p.imageUrl" class="h-full w-full object-cover" />
                         <svg *ngIf="!p.imageUrl" class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
                         </svg>
                       </div>
                       <div class="min-w-0">

@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
           <a routerLink="/dashboard" class="flex items-center gap-2.5 no-underline">
             <div class="w-8 h-8 bg-emerald-700 rounded-lg flex items-center justify-center shadow-md shadow-emerald-100/50">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <rect x="4" y="4" width="16" height="16" rx="4" />
-                <path d="M8 8h8M8 12h8M8 16h8" />
+                <path d="M12 4v16" />
+                <path d="M4 12h16" />
               </svg>
             </div>
             <span class="text-slate-900 font-bold text-lg tracking-tight">Inventrack</span>
@@ -42,7 +42,8 @@ import { Router } from '@angular/router';
           <a *ngIf="auth.isAdmin()" routerLink="/products/new"
              class="hidden sm:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors no-underline shadow-sm shadow-emerald-200/40">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
             </svg>
             Add Product
           </a>
@@ -59,7 +60,9 @@ import { Router } from '@angular/router';
             <button (click)="logout()"
               class="ml-1 p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition-all duration-200 font-semibold hover:shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
               </svg>
             </button>
           </div>
