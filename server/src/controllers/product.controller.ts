@@ -9,23 +9,24 @@ const COLLECTION = 'products';
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {
     const { search, category, page = '1', limit = '10' } = req.query;
-    const pageNum = parseInt(page as string);
-    const limitNum = parseInt(limit as string);
+    const pageNum = parseInt(page as string, 10);
+    const limitNum = parseInt(limit as string, 10);
 
     let query: FirebaseFirestore.Query = db.collection(COLLECTION);
 
-    // Apply where clauses first (Firestore requirement)
     if (category && category !== '') {
       query = query.where('category', '==', category);
     }
 
-    // Then apply orderBy - note: this may require a composite index if used with where clauses
-    query = query.orderBy('createdAt', 'desc');
-
     const snapshot = await query.get();
     let products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Product[];
 
-    // Search by name (client-side, Firestore free tier doesn't support full-text)
+    products = products.sort((a, b) => {
+      const aTime = a.createdAt && (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate().getTime() : 0;
+      const bTime = b.createdAt && (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate().getTime() : 0;
+      return bTime - aTime;
+    });
+
     if (search) {
       const searchLower = (search as string).toLowerCase();
       products = products.filter(p =>

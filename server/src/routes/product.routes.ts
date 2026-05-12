@@ -66,7 +66,7 @@ const upload = multer({
  *       200:
  *         description: List of products
  */
-router.get('/', authMiddleware, getProducts);
+router.get('/', getProducts);
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', authMiddleware, getProducts);
  *       200:
  *         description: List of categories
  */
-router.get('/categories', authMiddleware, getCategories);
+router.get('/categories', getCategories);
 
 /**
  * @swagger
@@ -98,7 +98,7 @@ router.get('/categories', authMiddleware, getCategories);
  *       404:
  *         description: Not found
  */
-router.get('/:id', authMiddleware, getProductById);
+router.get('/:id', getProductById);
 
 /**
  * @swagger

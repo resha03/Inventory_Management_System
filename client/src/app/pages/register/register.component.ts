@@ -62,6 +62,16 @@ import { AuthService } from '../../services/auth.service';
           </label>
 
           <label class="block group">
+            <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Role</span>
+            <select formControlName="role"
+              class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 px-4 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 hover:border-slate-300">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            <p *ngIf="form.get('role')?.touched && form.get('role')?.invalid" class="mt-2 text-xs text-red-500">Please select a role.</p>
+          </label>
+
+          <label class="block group">
             <span class="mb-2 block text-sm font-medium text-slate-700 transition-colors group-focus-within:text-emerald-600">Password</span>
             <div class="relative">
               <svg class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
@@ -115,6 +125,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['user', Validators.required],
     });
   }
 
@@ -125,8 +136,8 @@ export class RegisterComponent {
   submit() {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true; this.error = '';
-    const { name, email, password } = this.form.value;
-    this.auth.register({ name, email, password }).subscribe({
+    const { name, email, password, role } = this.form.value;
+    this.auth.register({ name, email, password, role }).subscribe({
       next: () => this.router.navigate(['/dashboard']),
       error: (e) => {
         this.error = e?.error?.message || e?.message || 'Registration failed.';

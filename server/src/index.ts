@@ -32,14 +32,20 @@ const allowedOrigins = [
 const isAllowedVercelPreview = (origin: string): boolean =>
   /^https:\/\/inventory-management-system-[a-z0-9-]+\.vercel\.app$/i.test(origin);
 
+const isLocalhostOrigin = (origin: string): boolean =>
+  origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('[::1]');
+
+const isDev = process.env.NODE_ENV !== 'production';
+
 // ─── Middleware ───────────────────────────────────────────
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || isAllowedVercelPreview(origin)) {
+    if (!origin || isDev || allowedOrigins.includes(origin) || isAllowedVercelPreview(origin) || isLocalhostOrigin(origin)) {
       callback(null, true);
       return;
     }
 
+    console.warn(`CORS blocked origin: ${origin}`);
     callback(new Error(`CORS blocked origin: ${origin}`));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
