@@ -96,6 +96,17 @@ http://localhost:4200
 - CORS allows `http://localhost:4200` plus configured `CLIENT_URL` and verified Vercel preview URLs.
 - The backend expects Supabase configuration through environment variables.
 
+## Screenshots
+
+Application screenshots are available in the `screenshots/` folder:
+
+- **login-page.png** - User login interface
+- **registerpage.png** - User registration interface
+- **user-dashboard.png** - Dashboard view for regular users
+- **admin-products.png** - Admin product listing page
+- **admid-add-products.png** - Admin product creation/edit form
+- **swagger.png** - API documentation via Swagger UI
+
 ## Useful commands
 
 Frontend:
@@ -114,3 +125,22 @@ npm run dev
 npm run build
 npm start
 ```
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/LoginPage.png)
+
+### Register Page
+![Register Page](screenshots/RegisterPage.png)
+
+### Admin Products
+![Admin Products](screenshots/admin-products.png)
+
+### Add Product
+![Add Product](screenshots/admid-add-products.png)
+
+### User Dashboard
+![User Dashboard](screenshots/user-dashboard.png)
+
+### Swagger API Documentation
+![Swagger](screenshots/swagger.png)
