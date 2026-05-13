@@ -1,76 +1,116 @@
-Inventory Management System
+# Inventory System
 
-A robust, web-based Inventory Management System designed to streamline stock tracking, user management, and transaction logging.
+Inventory System is a full-stack application for managing products, authentication, and file uploads.
 
+## Project structure
 
-Live Links
-    Frontend: https://inventory-management-system-alpha-blond.vercel.app
-    Backend API: https://inventory-management-system-tbcu.onrender.com
+- `client/` - Angular frontend application
+- `server/` - Express.js backend API using TypeScript and Supabase
+- `uploads/` - persisted uploaded product files/photos
+- `sql.txt` - optional SQL or data model references
 
-Tech Stack
-Frontend
-Angular – Modern web framework for building scalable apps.
-Tailwind CSS – Utility-first CSS framework for rapid UI development.
-TypeScript – Type-safe JavaScript for better maintainability.
+## Features
 
-Backend
-Node.js – JavaScript runtime for server-side logic.
-Express.js – Minimalist web application framework.
-TypeScript – Type-safe JavaScript for robust API development.
+- User registration and login with JWT authentication
+- Product CRUD operations
+- File upload support for products
+- Supabase-backed data storage
+- Swagger API documentation
 
-Database & Authentication
-Supabase – Scalable PostgreSQL database and backend-as-a-service.
-JWT Auth – Custom JSON Web Token implementation for secure sessions.
+## Technology stack
 
-Setup Instructions
-Prerequisites
-    Node.js (v18 or higher)
-    npm or yarn
+- Frontend: Angular 21
+- Backend: Express.js, TypeScript
+- Database/API: Supabase
+- Authentication: JSON Web Tokens (JWT)
+- File upload: Multer
+- API docs: Swagger UI
 
-Frontend Setup
-Bash
-    cd client
-    npm install
-    npm start
-Backend Setup
-Bash
-    cd server
-    npm install
-    npm run dev
-API Overview
-Authentication Endpoints
-POST /api/auth/register - User registration
-POST /api/auth/login - User login
+## Prerequisites
 
-Product Endpoints
-GET /api/products - Get all products (with pagination, search, category filter)
-GET /api/products/:id - Get single product details
-POST /api/products - Create new product (Admin only)
-PUT /api/products/:id - Update product information
-DELETE /api/products/:id - Remove product from inventory
-GET /api/products/categories - Get all existing categories
+- Node.js (v18+ recommended)
+- npm
+- Supabase project with a valid URL and key
 
-Health Check
-GET /api/health - API health status
+## Backend setup
 
-Features Implemented
-User Authentication
-    User registration and secure login with JWT tokens.
-    Role-Based Access (RBAC): Distinct permissions for Admin and Staff roles.
+1. Open terminal and navigate to `server/`
+2. Install dependencies:
 
-Dashboard
-    High-level overview of total products and stock health.
-    Low Stock Alerts: Visual indicators for items requiring restock.
-    Category-based statistics and recent activity logs.
+```bash
+cd server
+npm install
+```
 
-Product Management
-    Full CRUD operations (Create, Read, Update, Delete) for inventory items.
-    Advanced search, category filtering, and pagination.
-    Real-time stock level tracking and transaction history.
+3. Create a `.env` file in `server/` with values similar to:
 
-Responsive Design
-    Mobile-friendly interface built with Tailwind CSS.
-    Clean, modern UI/UX designed for both desktop and mobile devices.
+```env
+PORT=3000
+NODE_ENV=development
+CLIENT_URL=http://localhost:4200
+UPLOAD_DIR=uploads
+MAX_FILE_SIZE=5242880
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=7d
+```
 
-Database
-Supabase is used. Configure your Supabase project and add the credentials to server/.env. We use the users and products tables for the backend API.
+4. Start the backend in development mode:
+
+```bash
+npm run dev
+```
+
+5. Visit the API docs:
+
+```text
+http://localhost:3000/api/docs
+```
+
+## Frontend setup
+
+1. Open terminal and navigate to `client/`
+2. Install dependencies:
+
+```bash
+cd client
+npm install
+```
+
+3. Start the Angular development server:
+
+```bash
+npm start
+```
+
+4. Open the frontend in your browser:
+
+```text
+http://localhost:4200
+```
+
+## Notes
+
+- The backend creates the upload directory automatically if it does not exist.
+- CORS allows `http://localhost:4200` plus configured `CLIENT_URL` and verified Vercel preview URLs.
+- The backend expects Supabase configuration through environment variables.
+
+## Useful commands
+
+Frontend:
+
+```bash
+cd client
+npm start
+npm run build
+```
+
+Backend:
+
+```bash
+cd server
+npm run dev
+npm run build
+npm start
+```
