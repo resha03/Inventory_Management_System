@@ -1,67 +1,76 @@
+Inventory Management System
 
-*Inventory Management System*
-
-A web-based Inventory Management System developed by Sorsano, Aquilisca and Delos Reyes
-
- **Programming Tools & Technologies**
-
-# Inventory Management System
-
-A web-based Inventory Management System developed by Reysha03.
-
-## Programming Tools & Technologies
-
-- **Frontend:** Angular
-- **Backend:** Node.js + Express
-- **Database:** Supabase
-- **Authentication:** Custom JWT auth via backend
-- **Hosting:** Vercel (Frontend) + Render (Backend)
+A robust, web-based Inventory Management System designed to streamline stock tracking, user management, and transaction logging.
 
 
+Live Links
+    Frontend: https://inventory-management-system-alpha-blond.vercel.app
+    Backend API: https://inventory-management-system-tbcu.onrender.com
 
-## User Roles
+Tech Stack
+Frontend
+Angular – Modern web framework for building scalable apps.
+Tailwind CSS – Utility-first CSS framework for rapid UI development.
+TypeScript – Type-safe JavaScript for better maintainability.
 
-### Admin
+Backend
+Node.js – JavaScript runtime for server-side logic.
+Express.js – Minimalist web application framework.
+TypeScript – Type-safe JavaScript for robust API development.
 
-- Can add, update, and delete products/items
-- Can manage stock levels and inventory
-- Can view all transactions and reports
-- Can manage registered users
-- Can change own password
-- Default username: **ADMIN** | Default password: **ADMIN**
+Database & Authentication
+Supabase – Scalable PostgreSQL database and backend-as-a-service.
+JWT Auth – Custom JSON Web Token implementation for secure sessions.
 
+Setup Instructions
+Prerequisites
+    Node.js (v18 or higher)
+    npm or yarn
 
+Frontend Setup
+Bash
+    cd client
+    npm install
+    npm start
+Backend Setup
+Bash
+    cd server
+    npm install
+    npm run dev
+API Overview
+Authentication Endpoints
+POST /api/auth/register - User registration
+POST /api/auth/login - User login
 
-### Staff / User
-- Can sign up and set their own username and password
-- Can view current inventory and stock levels
-- Can process stock in and stock out transactions
-- Can view transaction history
+Product Endpoints
+GET /api/products - Get all products (with pagination, search, category filter)
+GET /api/products/:id - Get single product details
+POST /api/products - Create new product (Admin only)
+PUT /api/products/:id - Update product information
+DELETE /api/products/:id - Remove product from inventory
+GET /api/products/categories - Get all existing categories
 
+Health Check
+GET /api/health - API health status
 
-## Features
+Features Implemented
+User Authentication
+    User registration and secure login with JWT tokens.
+    Role-Based Access (RBAC): Distinct permissions for Admin and Staff roles.
 
-- Real-time inventory tracking
-- Low stock notifications
-- Transaction history and logs
-- User authentication and role management
-- Dashboard with inventory overview
+Dashboard
+    High-level overview of total products and stock health.
+    Low Stock Alerts: Visual indicators for items requiring restock.
+    Category-based statistics and recent activity logs.
 
+Product Management
+    Full CRUD operations (Create, Read, Update, Delete) for inventory items.
+    Advanced search, category filtering, and pagination.
+    Real-time stock level tracking and transaction history.
 
-## Requirements
+Responsive Design
+    Mobile-friendly interface built with Tailwind CSS.
+    Clean, modern UI/UX designed for both desktop and mobile devices.
 
-- Node.js v18+
-- Supabase account
-- npm or yarn
-
-
-## Setup
-
-1. Clone the repository
-2. Run `npm install` inside the `client` folder
-3. Add your `server/.env` file with Supabase config
-4. Run `npm run dev` in the `server` folder to start the backend locally
-
-
-## Database
-Supabase is used. Configure your Supabase project and add the credentials to `server/.env`. We use the `users` and `products` tables for the backend API.
+Database
+Supabase is used. Configure your Supabase project and add the credentials to server/.env. We use the users and products tables for the backend API.

@@ -54,21 +54,11 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
                   <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">
                     Category <span class="text-red-500">*</span>
                   </label>
-                  <input type="text" formControlName="category" placeholder="e.g. Electronics"
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
-                  <p *ngIf="f['category'].touched && f['category'].invalid" class="mt-2 text-xs text-red-500">Category required</p>
-                </div>
-              </div>
-
-              <!-- Description -->
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">Description</label>
-                <input type="text" formControlName="description" placeholder="Product description..."
-                    class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300" />
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
+                    <select formControlName="category"
+                      class="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 focus:bg-white hover:border-slate-300">
+                      <option value="" disabled>Select category</option>
+                      <option *ngFor="let c of categoryOptions" [value]="c">{{ c }}</option>
+                    </select>
                   <label class="block text-sm font-semibold text-slate-700 mb-2.5 uppercase tracking-[0.3em]">
                     Price (₱) <span class="text-red-500">*</span>
                   </label>
@@ -157,11 +147,27 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  categoryOptions: string[] = ['Gadgets', 'Electronics', 'Accessories', 'Office', 'Fashion', 'Home', 'Beauty'];
+
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.paramMap.get('id') || '';
     this.isEdit = !!this.productId;
+
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        categories.forEach((category) => {
+          if (category && !this.categoryOptions.includes(category)) {
+            this.categoryOptions.push(category);
+          }
+        });
+      },
+      error: () => {
+        // ignore category loading errors, fallback to defaults
+      },
+    });
+
     if (this.isEdit) {
       this.productService.getProduct(this.productId).subscribe({
         next: (p) => { this.form.patchValue(p); if (p.imageUrl) this.previewUrl = this.backendUrl + p.imageUrl; },
